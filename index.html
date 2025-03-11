@@ -79,5 +79,71 @@
     <div class="cat-img" id="p">0202</div>
 </div>
 
+<script>
+    // 用預載張嘴圖片
+    const img = new Image();
+    img.src = "imgs/op.png";
+
+    // 計數器初始化
+    let count = 0;
+
+    // 創建音效物件
+    const audio = new Audio("pops/pop1.mp3");
+
+    // 當滑鼠按下，可以輪流播放 pop1-4 的 mp3
+    let audioIndex = 1;
+    function playRandomAudio() {
+        audioIndex = Math.floor(Math.random() * 4) + 1; // 隨機選擇 1 到 4
+        const audio = new Audio(`pops/pop${audioIndex}.mp3`);
+        audio.play();
+    }
+
+    // 寫一個function 計數器累加
+    function addCount() {
+        count++;
+    }
+
+    // 註冊滑鼠按下的事件，呼叫計數器累加 function
+    document.addEventListener("mousedown", function() {
+        addCount();
+        // 更新貓咪狀態
+        document.getElementById("p").style.backgroundImage = "url('imgs/op.png')";
+        document.getElementById("p").innerText = count;
+        // 播放隨機音效
+        playRandomAudio();
+    });
+
+    // 註冊滑鼠放開的事件，切換張嘴圖片
+    document.addEventListener("mouseup", function() {
+        // 更新貓咪狀態
+        document.getElementById("p").style.backgroundImage = "url('imgs/p.png')";
+        document.getElementById("p").innerText = count;
+        // 滑鼠放開後，等待 25 毫秒，再切回閉嘴圖片
+        setTimeout(function() {
+            document.getElementById("p").style.backgroundImage = "url('imgs/p.png')";
+        }, 25);
+    });
+
+    // 也可以用鍵盤互動，不限定是哪個按鍵
+    document.addEventListener("keydown", function() {
+        addCount();
+        // 更新貓咪狀態
+        document.getElementById("p").style.backgroundImage = "url('imgs/op.png')";
+        document.getElementById("p").innerText = count;
+        // 當按下鍵盤，播放 pops/pop1.mp3
+        audio.play();
+    });
+    // 當鍵盤放開，切換張嘴圖片
+    document.addEventListener("keyup", function() {
+        // 更新貓咪狀態
+        document.getElementById("p").style.backgroundImage = "url('imgs/p.png')";
+        document.getElementById("p").innerText = count;
+        // 鍵盤放開後，等待 25 毫秒，再切回閉嘴圖片
+        setTimeout(function() {
+            document.getElementById("p").style.backgroundImage = "url('imgs/p.png')";
+        }, 25);
+    });
+
+</script>
 </body>
 </html>
